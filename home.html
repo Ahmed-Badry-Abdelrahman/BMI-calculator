@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-one">
+                <h1>Enter your info</h1>
+                <input type="text" id="height" placeholder="Height (m)"/>
+                <input type="text" id="weight" placeholder="Weight (kg)"/>
+                <button id="calc-btn">calculate</button>
+            </div>
+            <hr>
+            <div class="col-two">
+                <h1>Result</h1>
+                <p id="result-num"></p>
+                <p id="result"></p>
+                <p id="error" style="display: none; color: red; text-align: center"></p>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    let resultNum = document.getElementById('result-num')
+    let result = document.getElementById('result')
+    let calcBtn = document.getElementById('calc-btn')
+    let error = document.getElementById('error')
+
+    function calculateBMI(height, weight) {
+        if (height > 0 && weight > 0) {
+            return (weight / (height * height));
+        } else { 
+            resultNum.style.display = 'none';
+            result.style.display = 'none';
+            error.style.display = 'block';
+            error.innerHTML = 'Error, there is an issue with the height or weight';
+        }
+    }
+
+    calcBtn.addEventListener('click', ()=> {
+        error.style.display = 'none';
+        resultNum.style.display = 'block';
+        result.style.display = 'block';
+        let heightValue = parseFloat(document.getElementById('height').value)
+        let weightValue = parseFloat(document.getElementById('weight').value)
+        let bim = calculateBMI(heightValue, weightValue)
+        resultNum.innerHTML = bim.toFixed(2)
+
+        if (bim < 18){
+            result.innerHTML = 'thin'
+            result.style.color = 'black'
+        }else if (bim >= 18 && bim < 24.9) {
+            result.innerHTML = 'perfect weight'
+            result.style.color = 'green' 
+        }else if (bim >= 25 && bim < 29.9) {
+            result.innerHTML = 'overweight'
+            result.style.color = 'black'
+        }else if (bim >= 30 && bim < 34.9){
+            result.innerHTML = 'obese level one'
+            result.style.color = 'black'
+        }else if (bim >= 35 && bim < 39.9){
+            result.innerHTML = 'obese level two'
+            result.style.color = 'black'
+        } else {
+            result.innerHTML = 'Obesity is dangerous'
+            result.style.color = 'red' 
+        }
+    })
+</script>
+</html>
